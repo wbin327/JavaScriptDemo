@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+
+    <style type="text/css">
+        .image_box{
+            width: 350px;
+            height: 200px;
+            /*水平、垂直居中*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .image_box img{
+            /*使所有的图片堆叠在一起*/
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            height: 100%;
+            width: 100%;
+            /*图片变大变小时的动效*/
+            transition: all 0.3s ease;
+        }
+        .left{
+            /*向左偏移150px,缩放0.8*/
+            transform: translate(-150px, 0) scale(0.8);
+            /*设置图片透明度*/
+            opacity: 0.8;
+            /*设置图片堆叠的顺序*/
+            z-index: 0;
+        }
+        .center{
+            transform: translate(0, 0) scale(1);
+            /*设置图片透明度*/
+            opacity:1;
+            /*设置图片堆叠的顺序*/
+            z-index: 4;
+        }
+        .right{
+            /*向右偏移150px,缩放0.8*/
+            transform: translate(150px, 0) scale(0.8);
+            /*设置图片透明度*/
+            opacity: 0.8;
+            /*设置图片堆叠的顺序*/
+            z-index: 0;
+        }
+        .left-button{
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+        }
+        .right-button{
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+    <!-- jQuery -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="image_box">
+    <img src="1.jpg" class="left">
+    <img src="2.jpg" class="center">
+    <img src="3.jpg" class="right">
+</div>
+
+<img src="leftico.png" class="left-button">
+<img src="rightico.png" class="right-button">
+
+
+<script>
+    let css_list = ['left', 'center', 'right'];
+    $(".left-button").click(function () {
+        // 向集合的最后一位添加新元素
+        css_list.push(css_list[0]);
+        // 移除集合的首元素
+        css_list.shift();
+        $('.image_box img').each(function (index, element) {
+            $(element).removeClass().addClass(css_list[index]);
+        })
+    });
+    $(".right-button").click(function () {
+        // 向集合开头添加元素
+        css_list.unshift(css_list[2]);
+        // 移除集合最后一个元素
+        css_list.pop();
+        $('.image_box img').each(function (index, element) {
+            $(element).removeClass().addClass(css_list[index]);
+        })
+    });
+</script>
+</body>
+</html>
