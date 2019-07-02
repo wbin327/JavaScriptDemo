@@ -89,8 +89,8 @@ $(function ($) {
       // 所以需要加上DIV到顶部以及DIV到左边的距离
       console.log("NATIVE_IMG:", NATIVE_IMG.height, NATIVE_IMG.width);
       console.log("$element:", $element.width(), $element.height() );
-      var zoomX = -Math.floor(relX / $element.width() * NATIVE_IMG.width - $options.width / 2) + 460;
-      var zoomY = -Math.floor(relY / $element.height() * NATIVE_IMG.height - $options.height / 2) + 135;
+      var zoomX = -Math.floor(relX / $element.width() * NATIVE_IMG.width - $options.width / 2);
+      var zoomY = -Math.floor(relY / $element.height() * NATIVE_IMG.height - $options.height / 2);
 
 
       // Apply styles to lens
@@ -100,7 +100,6 @@ $(function ($) {
         "background-image"    : "url(" + $IMAGE_URL + ")",
         "background-position" : zoomX + "px" + " " + zoomY + "px"
       });
-
     })
 
     // Hide magnification lens
