@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片根据滚轮放大demo</title>
+
+    <style>
+        .image_box{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 6px solid #000;
+            /*添加以下语句，当图片超出DIV边界时，隐藏超出的部分*/
+            overflow: hidden;
+            height: 400px;
+            width: 700px;
+        }
+        .image_box img{
+            height: 400px;
+            width: 700px;
+        }
+    </style>
+    <!-- jquery -->
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery-mousewheel/3.1.13/jquery.mousewheel.js"></script>
+</head>
+<body>
+
+<div class="image_box">
+    <img src="1.jpg">
+</div>
+
+<script>
+    // 滚轮放大图片
+    let size=1;
+    $(".image_box").mousewheel(
+        function (event, delta) {
+            // 没滚动一次滚轮，放大0.1倍
+            size = size + delta/10;
+            let scale = `scale(${size})`;
+            $(".image_box img").css({'transform': scale});
+        }
+    )
+
+    // 图片移动函数
+    function move(left, top){
+        let css = {
+            'position': 'absolute',
+            'left': left,
+            'top': top,
+            // 图片变大缩小特效
+            'transition': 'transform 300ms',
+        }
+        $('.image_box img').css(css);
+    }
+
+    // 鼠标拖动图片函数
+    let isDrag = false;             // 是否开始拖动
+    let disX, disY;                 // 图片相对于图片的位置
+    $('.image_box').hover(
+        function () {
+            $('.image_box').css({'curosr': 'move'});
+        }
+    );
+    $('.image_box').mousedown(function (e) {
+        isDrag = true;
+        // 鼠标位置
+        let x = e.pageX;
+        let y = e.pageY;
+        // 鼠标相对于div的位置
+        disX = x - this.offsetLeft;
+        disY = y - this.offsetTop;
+        // 取消浏览器点击鼠标拖动文件的效果
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        else {
+            e.returnvalue = false;
+        }
+    })
+    $('.image_box img').mousemove(function (e) {
+        if(!isDrag)
+            return ;
+        let x = e.pageX;
+        let y = e.pageY;
+        move(x - disX, y - disY);
+    })
+</script>
+</body>
+</html>
